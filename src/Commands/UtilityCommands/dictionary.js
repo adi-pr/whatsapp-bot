@@ -4,33 +4,33 @@ require('dotenv').config()
 const apiKey = process.env.DICTIONARY_KEY
 
 const dictionaryCommand = async (client, message, args) => {
-    const content = message.body;
 
-    if (content.startsWith('!dictionary')) {
-        const phrase = args.slice(1).join(' ');
+    const phrase = args.slice(1).join(' ');
 
-        if (phrase) {
-            try {
-                
-                const data = await fetchDefinition(phrase)
-                console.log("🚀 ~ file: dictionary.js:16 ~ dictionaryCommand ~ data:", data)
-                if (data && Array.isArray(data)) {
-                    const shortDefinitions = data[0].shortdef.map((item, index) => `${index + 1}: ${item}\n \n`)
-                    console.log("🚀 ~ file: dictionary.js:19 ~ dictionaryCommand ~ shortDefinitions:", shortDefinitions)
+    if (phrase) {
+        try {
 
-                    const shortDefString = shortDefinitions.join('');
-                    console.log("🚀 ~ file: dictionary.js:22 ~ dictionaryCommand ~ shortDefString:", shortDefString)
+            const data = await fetchDefinition(phrase)
 
-                    client.sendMessage(message.from, shortDefString)
-                }
-
-            } catch (err) {
-                console.log(err);
+            if (data[0].meta.offensive) {
+                message.reply("You cannot search for offensive words!")
+                return
             }
-        } else {
-            // Handle case when no phrase is provided
-            console.log('No phrase provided by the user.');
+
+            if (data && Array.isArray(data)) {
+                const shortDefinitions = data[0].shortdef.map((item, index) => `${index + 1}: ${item}\n \n`)
+
+                const shortDefString = shortDefinitions.join('');
+
+                client.sendMessage(message.from, shortDefString)
+            }
+
+        } catch (err) {
+            console.log(err);
         }
+    } else {
+        // Handle case when no phrase is provided
+        console.log('No phrase provided by the user.');
     }
 };
 
