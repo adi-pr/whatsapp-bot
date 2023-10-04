@@ -13,7 +13,7 @@ const loadCommands = (dir) => {
   fs.readdirSync(dir).forEach((file) => {
     const fullPath = `${dir}/${file}`;
     if (fs.statSync(fullPath).isDirectory()) {
-      loadCommands(fullPath); 
+      loadCommands(fullPath);
     } else if (file.endsWith('.js')) {
       const command = require(fullPath);
       commands.set(file.split('.')[0], command);
@@ -34,13 +34,15 @@ client.on('ready', () => {
 client.on('message', async (message) => {
   const content = message.body;
   const args = content.split(' ');
-  const commandName = args[0].toLowerCase().substring(1); 
+  const commandName = args[0].toLowerCase().substring(1);
 
-  if (commands.has(commandName)) {
-    const command = commands.get(commandName);
-    await command(client, message, args);
-  } else {
-    client.sendMessage(message.from, `!${commandName} is a unknown command!`)
+  if (content.startsWith('!')) {
+    if (commands.has(commandName)) {
+      const command = commands.get(commandName);
+      await command(client, message, args);
+    } else {
+      client.sendMessage(message.from, `!${commandName} is a unknown command!`)
+    }
   }
 });
 
