@@ -4,12 +4,11 @@ const { MessageMedia } = require('whatsapp-web.js')
 const memeCommand = async (client, message) => {
     const content = message.body
 
-    if (content === '!meme') {
-        const imgURL = await randomMeme()
-        const memeImage = await MessageMedia.fromUrl(imgURL)
+    const imgURL = await randomMeme()
+    const memeImage = await MessageMedia.fromUrl(imgURL)
 
-        client.sendMessage(message.from, memeImage)
-    }
+    client.sendMessage(message.from, memeImage)
+
 }
 
 const randomMeme = async () => {
