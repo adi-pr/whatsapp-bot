@@ -5,3 +5,7 @@ node_modules
 
 package-lock.json
 .env
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
