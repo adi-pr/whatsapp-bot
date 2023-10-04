@@ -6,15 +6,11 @@ const memeCommand = async (client, message) => {
 
     if (content === '!meme') {
         const imgURL = await randomMeme()
-        console.log("🚀 ~ file: meme.js:9 ~ memeCommand ~ imgURL:", imgURL)
         const memeImage = await MessageMedia.fromUrl(imgURL)
 
         client.sendMessage(message.from, memeImage)
     }
 }
-
-module.exports = { name: 'meme', execute: memeCommand };
-
 
 const randomMeme = async () => {
     try {
@@ -25,3 +21,6 @@ const randomMeme = async () => {
         throw error
     }
 }
+
+
+module.exports = memeCommand;
