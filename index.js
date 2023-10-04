@@ -39,6 +39,8 @@ client.on('message', async (message) => {
   if (commands.has(commandName)) {
     const command = commands.get(commandName);
     await command(client, message, args);
+  } else {
+    client.sendMessage(message.from, `!${commandName} is a unknown command!`)
   }
 });
 

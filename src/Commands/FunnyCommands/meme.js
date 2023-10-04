@@ -14,7 +14,7 @@ const memeCommand = async (client, message) => {
 
 const randomMeme = async () => {
     try {
-        const meme = await memes.random()
+        const meme = await memes.fromReddit()
         return meme.image
     } catch (error) {
         console.error('Error fetching random meme:', error)
