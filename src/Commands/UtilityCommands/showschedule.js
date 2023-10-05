@@ -1,24 +1,34 @@
 const db = require("../../../firebase.config");
+const { collection, getDocs, query, where } = require('firebase/firestore');
 
-const { collection, getDocs } = require('firebase/firestore');
+const showScheduleCommand = async (client, message, args) => {
+    let day = args.slice(1).join(" ").trim(); // Combine the arguments to form the day
 
+    if (!day) {
+        // If no day is specified, default to today's day
+        const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const todayIndex = new Date().getDay();
+        day = daysOfWeek[todayIndex];
+    }
 
-const showScheduleCommand = async (client, message) => {
     try {
-        // Retrieve schedules from Firestore
         const schedulesRef = collection(db, 'schedules');
-        const schedulesSnapshot = await getDocs(schedulesRef);
+        const q = query(schedulesRef, where('day', '==', day));
+        const schedulesSnapshot = await getDocs(q);
+
+        if (schedulesSnapshot.empty) {
+            return client.sendMessage(message.from, `No schedules found for ${day}.`);
+        }
 
         const schedules = [];
         schedulesSnapshot.forEach((doc) => {
             schedules.push(doc.data());
         });
 
-        const response = schedules.reverse().map((schedule) => {
+        const response = schedules.map((schedule) => {
             return `${schedule.course}\nType: ${schedule.type}\nDay: ${schedule.day}\nTime: ${schedule.time}\nLecturer: ${schedule.lecturerName}\nMeeting Link: ${schedule.meetingLink}`;
-        }).join('\n\n'); // Join schedules with double line breaks
+        }).join('\n\n'); 
 
-        // Send the response using your WhatsApp bot client
         await client.sendMessage(message.from, response);
 
     } catch (error) {
