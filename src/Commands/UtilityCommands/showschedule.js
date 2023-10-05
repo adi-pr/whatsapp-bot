@@ -15,7 +15,7 @@ const showScheduleCommand = async (client, message) => {
         });
 
         const response = schedules.reverse().map((schedule) => {
-            return `${schedule.course}\nType: ${schedule.type}\nDay: ${schedule.day}\nTime: ${schedule.time}\nLecturer: ${schedule.lectureName}\nMeeting Link: ${schedule.meetingLink}`;
+            return `${schedule.course}\nType: ${schedule.type}\nDay: ${schedule.day}\nTime: ${schedule.time}\nLecturer: ${schedule.lecturerName}\nMeeting Link: ${schedule.meetingLink}`;
         }).join('\n\n'); // Join schedules with double line breaks
 
         // Send the response using your WhatsApp bot client
