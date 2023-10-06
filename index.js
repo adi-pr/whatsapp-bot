@@ -9,6 +9,8 @@ const client = new Client({
 
 const commands = new Map()
 
+module.exports = commands
+
 const loadCommands = (dir) => {
   fs.readdirSync(dir).forEach((file) => {
     const fullPath = `${dir}/${file}`;
