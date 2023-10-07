@@ -1,5 +1,7 @@
 const googleIt = require('google-it')
 
+// ! Allows users to make a search query and display the results 
+
 const searchCommand = (client, message, args) => {
 
   const q = args.slice(1).join(" ")

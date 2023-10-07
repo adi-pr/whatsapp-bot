@@ -3,6 +3,8 @@ require('dotenv').config()
 
 const apiKey = process.env.DICTIONARY_KEY
 
+// ! Shows the definition of a word/phrase 
+
 const dictionaryCommand = async (client, message, args) => {
 
     const phrase = args.slice(1).join(' ');

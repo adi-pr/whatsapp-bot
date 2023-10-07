@@ -1,6 +1,8 @@
 const db = require("../../../firebase.config");
 const { collection, getDocs, query, where } = require('firebase/firestore');
 
+// ! Displays a list of the class schedule
+
 const showScheduleCommand = async (client, message, args) => {
     let day = args.slice(1).join(" ").trim(); 
 

@@ -1,6 +1,8 @@
 const db = require("../../../firebase.config");
 const { collection, getDocs, query, where, orderBy, startAt } = require('firebase/firestore');
 
+// ! Show class schedule based on course
+
 const courseCommand = async (client, message, args) => {
     let course = args.slice(1).join(" ").trim().toUpperCase();
 
