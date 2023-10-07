@@ -2,7 +2,7 @@ const db = require("../../../firebase.config");
 const { collection, getDocs, query, where } = require('firebase/firestore');
 
 const showScheduleCommand = async (client, message, args) => {
-    let day = args.slice(1).join(" ").trim(); // Combine the arguments to form the day
+    let day = args.slice(1).join(" ").trim(); 
 
     if (!day) {
         // If no day is specified, default to today's day
